@@ -1,28 +1,3 @@
-class MyCard extends HTMLElement {
-    constructor() {
-        super();
-    }
-
-    connectedCallback() {
-        if (this.shadowRoot) {
-            return;
-        }
-
-        const shadow = this.attachShadow({ mode: "open" });
-        shadow.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    width: 220px;
-                    padding: 1rem;
-                    background: white;
-                }
-            </style>
-
-            <slot></slot>
-        `;
-    }
-}
 
 class MyHorizontalScroll extends HTMLElement {
     constructor() {
@@ -65,4 +40,3 @@ class MyHorizontalScroll extends HTMLElement {
 }
 
 customElements.define("my-horizontal-scroll", MyHorizontalScroll);
-customElements.define("my-card", MyCard);
