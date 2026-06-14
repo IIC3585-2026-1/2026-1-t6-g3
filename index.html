@@ -15,10 +15,48 @@
       <button type="button" id="action-button">Boton</button>
 
       <numeric-field value="10"></numeric-field>
+
+      <my-slider min="0" max="100" value="50" step="5" style="max-width: 300px;">
+        <slider-label>0&#8451;</slider-label>
+        <slider-label position="25">25&#8451;</slider-label>
+        <slider-label position="50">50&#8451;</slider-label>
+        <slider-label position="75">75&#8451;</slider-label>
+        <slider-label position="100">100&#8451;</slider-label>
+      </my-slider>
     </main>
+
+    <template id="slider-template">
+      <style>
+        :host {
+          display: block;
+        }
+    
+        .slider {
+          width: 100%;
+        }
+    
+        input[type="range"] {
+          width: 100%;
+          cursor: pointer;
+        }
+    
+        .labels {
+          position: relative;
+          height: 1.25rem;
+          margin-top: 0.25rem;
+        }
+      </style>
+      <div class="slider">
+        <input type="range" />
+        <div class="labels">
+          <slot></slot>
+        </div>
+      </div>
+    </template>
 
     <script src="main.js"></script>
 
     <script src="numericField.js"></script>
+    <script src="slider.js"></script>
   </body>
 </html>
