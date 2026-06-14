@@ -33,46 +33,53 @@ class NumericField extends HTMLElement {
         this.input = document.createElement("input");
         this.input.setAttribute("type", "number");
 
-        this.btnUp = document.createElement("button");
-        this.btnUp.setAttribute("type", "button");
-        this.btnUp.setAttribute("data-action", "up");
-        this.btnUp.textContent = "+";
-
-        this.btnDown = document.createElement("button");
-        this.btnDown.setAttribute("type", "button");
-        this.btnDown.setAttribute("data-action", "down");
-        this.btnDown.textContent = "-";
-
         if (this.hasAttribute("value")) {
             this.input.value = this.getAttribute("value");
         }
 
         wrapper.appendChild(this.input);
-        wrapper.appendChild(this.btnUp);
-        wrapper.appendChild(this.btnDown);
         shadow.appendChild(wrapper);      
         
-        this.btnUp.addEventListener("click", e => { this.handleClick(e); });
-        this.btnDown.addEventListener("click", e => { this.handleClick(e); });
         this.input.addEventListener("input", e => { this.handleInput(e); });
-    }
 
-    handleClick(e) {
-        const action = e.target.dataset.action;
-        let current = Number(this.input.value) || 0;
-
-        if (action === "up") {
-            current += 1;
-        } else if (action === "down") {
-            current -= 1;
+        const style = document.createElement("style");
+        style.textContent = `
+        .wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        this.value = current;
+        input {
+            width: 5rem;
+            padding: 0.25rem 0.5rem;
+            font: inherit;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        button:hover {
+            background-color: #eee;
+        }
+        `;
+
+        shadow.appendChild(style);
+        shadow.appendChild(wrapper);
     }
 
     handleInput(e) {
         this.value = e.target.value;
     }
+
+    
 }
 
 customElements.define("numeric-field", NumericField);
