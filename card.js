@@ -9,6 +9,8 @@ class MyCard extends HTMLElement {
         }
 
         const shadow = this.attachShadow({ mode: "open" });
+        // The variables are defined in the styles.css file so we can use them here
+        // IA help with this
         shadow.innerHTML = `
             <style>
                 :host {
