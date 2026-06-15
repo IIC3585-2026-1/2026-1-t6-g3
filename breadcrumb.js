@@ -1,57 +1,120 @@
 class Breadcrumb extends HTMLElement {
-    constructor() {
-        super();
+  constructor() {
+    super();
+    this.nav = null;
+  }
+
+  connectedCallback() {
+    if (this.shadowRoot) {
+      this.refresh();
+      return;
     }
 
-    connectedCallback() {
-        if (this.shadowRoot) {
-            return;
-        }
+    const shadow = this.attachShadow({ mode: "open" });
 
-        const shadow = this.attachShadow({ mode: "open" });
-        const paragraph = document.createElement("p");
+    const style = document.createElement("style");
+    style.textContent = `
+      nav {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        font-size: 0.85rem;
+      }
 
-        const breadcrumbItems = this.querySelectorAll("mi-breadcrumb-item");
+      a, span {
+        color: var(--text-muted, #8b9cb3);
+        text-decoration: none;
+        transition: color 0.15s;
+      }
 
-        let paragraphContent = "";
+      a:hover {
+        color: var(--accent, #3b9eff);
+      }
 
-        breadcrumbItems.forEach((item) => {
-            paragraphContent += item.value + " ";
+      .current {
+        color: var(--accent, #3b9eff);
+        font-weight: 600;
+      }
+
+      .separator {
+        color: var(--text-muted, #8b9cb3);
+        user-select: none;
+        opacity: 0.5;
+      }
+    `;
+
+    this.nav = document.createElement("nav");
+    this.nav.setAttribute("aria-label", "Ruta de navegación");
+
+    shadow.appendChild(style);
+    shadow.appendChild(this.nav);
+
+    this.refresh();
+  }
+
+  refresh() {
+    if (!this.nav) {
+      return;
+    }
+
+    this.nav.textContent = "";
+    const items = [...this.querySelectorAll("mi-breadcrumb-item")];
+
+    items.forEach((item, index) => {
+      if (index > 0) {
+        const sep = document.createElement("span");
+        sep.className = "separator";
+        sep.textContent = "›";
+        sep.setAttribute("aria-hidden", "true");
+        this.nav.appendChild(sep);
+      }
+
+      const isLast = index === items.length - 1;
+      const label = item.textContent.trim();
+      const room = item.dataset.room;
+
+      if (isLast) {
+        const current = document.createElement("span");
+        current.className = "current";
+        current.textContent = label;
+        this.nav.appendChild(current);
+      } else {
+        const link = document.createElement("a");
+        link.href = item.getAttribute("href") || "#";
+        link.textContent = label;
+        link.addEventListener("click", (e) => {
+          if (room) {
+            e.preventDefault();
+            this.dispatchEvent(
+              new CustomEvent("breadcrumb-navigate", {
+                bubbles: true,
+                detail: { room },
+              })
+            );
+          }
         });
-
-        paragraph.textContent = paragraphContent.trim();
-        shadow.appendChild(paragraph);
-
-        const style = document.createElement("style");
-        style.textContent = `
-        p {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #333;
-            text-align: center;
-        }
-        `;
-
-        shadow.appendChild(style);
-    }
+        this.nav.appendChild(link);
+      }
+    });
+  }
 }
 
 class BreadcrumbItem extends HTMLElement {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    get href() {
-        return this.getAttribute('href');
-    }
+  get href() {
+    return this.getAttribute("href");
+  }
 
-    get value() {
-        if (this.href) {
-            return this.textContent.trim() + " >";
-        } else {
-            return this.textContent.trim();
-        }
+  get value() {
+    if (this.href) {
+      return this.textContent.trim() + " >";
     }
+    return this.textContent.trim();
+  }
 }
 
 customElements.define("mi-breadcrumb-item", BreadcrumbItem);

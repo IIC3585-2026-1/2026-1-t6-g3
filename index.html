@@ -7,86 +7,176 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="page">
-      <mi-breadcrumb>
-        <mi-breadcrumb-item href="#">Inicio</mi-breadcrumb-item>
-        <mi-breadcrumb-item href="#">Sala</mi-breadcrumb-item>
-        <mi-breadcrumb-item>Dispositivos</mi-breadcrumb-item>
-      </mi-breadcrumb>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          Smart Home
+          <span>Panel de control</span>
+        </div>
+        <nav class="room-nav" id="room-nav" aria-label="Habitaciones"></nav>
+      </aside>
 
-      <h1>Panel de control — Sala</h1>
-      <p>
-        Demostración de los web components del equipo aplicados a un panel de hogar inteligente.
-      </p>
+      <main class="page">
+        <header class="page-header">
+          <mi-breadcrumb id="breadcrumb">
+            <mi-breadcrumb-item href="#" data-room="sala">Inicio</mi-breadcrumb-item>
+            <mi-breadcrumb-item id="breadcrumb-room">Sala</mi-breadcrumb-item>
+          </mi-breadcrumb>
 
-      <section class="section">
-        <h2>Termostato</h2>
-        <p>Ajusta la temperatura objetivo de la sala.</p>
-        <my-slider min="15" max="30" value="22" step="1" style="max-width: 300px;">
-          <slider-label position="15">15&#8451;</slider-label>
-          <slider-label position="20">20&#8451;</slider-label>
-          <slider-label position="25">25&#8451;</slider-label>
-          <slider-label position="30">30&#8451;</slider-label>
-        </my-slider>
-      </section>
+          <h1 id="page-title">Panel de control — Sala</h1>
+          <p>Demostración de los web components del equipo aplicados a un panel de hogar inteligente.</p>
+        </header>
 
-      <section class="section">
-        <h2>Controles</h2>
-        <div class="controls">
-          <div class="control">
-            <label>Apagado automático (minutos)</label>
-            <numeric-field value="30"></numeric-field>
+        <div class="dashboard">
+          <div class="dashboard-top">
+            <section class="section">
+              <p class="section-label">Clima</p>
+              <h2>Termostato</h2>
+              <p class="section-desc">Ajusta la temperatura objetivo de la habitación.</p>
+              <div class="temp-display" id="temp-display" aria-live="polite">22<span>°C</span></div>
+              <my-slider id="thermostat" min="15" max="30" value="22" step="1">
+                <slider-label position="15">15&#8451;</slider-label>
+                <slider-label position="20">20&#8451;</slider-label>
+                <slider-label position="25">25&#8451;</slider-label>
+                <slider-label position="30">30&#8451;</slider-label>
+              </my-slider>
+            </section>
+
+            <section class="section">
+              <p class="section-label">Dispositivos</p>
+              <h2>Controles</h2>
+              <p class="section-desc">Configura el comportamiento de los dispositivos de la habitación.</p>
+              <div class="controls">
+                <div class="control">
+                  <label for="timer-field">Apagado automático (minutos)</label>
+                  <numeric-field id="timer-field" value="30"></numeric-field>
+                </div>
+                <div class="control">
+                  <my-switch id="lights-switch">
+                    <label>Luces:</label>
+                    <span slot="checked-message">Encendidas</span>
+                    <span slot="unchecked-message">Apagadas</span>
+                  </my-switch>
+                </div>
+              </div>
+            </section>
           </div>
-          <div class="control">
-            <my-switch>
-              <label>Luces:</label>
-              <span slot="checked-message">Encendidas</span>
-              <span slot="unchecked-message">Apagadas</span>
-            </my-switch>
+
+          <section class="section">
+            <p class="section-label">Navegación</p>
+            <h2>Otras habitaciones</h2>
+            <p class="section-desc">Selecciona una habitación para cambiar el panel de control.</p>
+            <my-horizontal-scroll class="products" id="room-scroll">
+              <button slot="left-button" class="scroll-btn" type="button" aria-label="Desplazar izquierda">&#8592;</button>
+              <button slot="right-button" class="scroll-btn" type="button" aria-label="Desplazar derecha">&#8594;</button>
+            </my-horizontal-scroll>
+          </section>
+
+          <div class="dashboard-bottom">
+            <section class="section">
+              <p class="section-label">Documentación</p>
+              <h2>Ayuda</h2>
+              <mi-accordion>
+                <mi-accordion-item>
+                  <span slot="heading">Termostato</span>
+                  <div class="panel">
+                    Usa el deslizador para fijar la temperatura objetivo entre 15 y 30 grados.
+                  </div>
+                </mi-accordion-item>
+                <mi-accordion-item>
+                  <span slot="heading">Temporizador</span>
+                  <div class="panel">
+                    El campo numérico define en cuántos minutos se apagan los dispositivos de forma automática.
+                  </div>
+                </mi-accordion-item>
+                <mi-accordion-item>
+                  <span slot="heading">Luces</span>
+                  <div class="panel">
+                    El interruptor enciende o apaga las luces de la habitación activa.
+                  </div>
+                </mi-accordion-item>
+                <mi-accordion-item>
+                  <span slot="heading">Navegación</span>
+                  <div class="panel">
+                    Usa la barra lateral o las tarjetas horizontales para cambiar de habitación. Cada una conserva su propia configuración.
+                  </div>
+                </mi-accordion-item>
+              </mi-accordion>
+            </section>
+
+            <section class="section" id="status">
+              <p class="section-label">Estado</p>
+              <h2>Resumen</h2>
+              <p id="status-text"></p>
+            </section>
           </div>
         </div>
-      </section>
+      </main>
+    </div>
 
-      <section class="section">
-        <h2>Otras habitaciones</h2>
-        <my-horizontal-scroll>
-          <my-card class="scroll-card">Cocina — 2 dispositivos</my-card>
-          <my-card class="scroll-card">Dormitorio — Luces apagadas</my-card>
-          <my-card class="scroll-card">Baño — Sin alertas</my-card>
-          <my-card class="scroll-card">Garaje — Puerta cerrada</my-card>
-          <my-card class="scroll-card">Jardín — Riego programado</my-card>
-        </my-horizontal-scroll>
-      </section>
+    <template id="horizontal-scroll-template">
+      <style>
+        :host {
+          display: block;
+          --scroll-gap: 1rem;
+          --scroll-padding: 1rem;
+          --button-size: 40px;
+        }
 
-      <section class="section">
-        <h2>Ayuda</h2>
-        <mi-accordion style="max-width: 350px;">
-          <mi-accordion-item>
-            <span slot="heading">Termostato</span>
-            <div class="panel">
-              Usa el deslizador para fijar la temperatura objetivo de la sala entre 15 y 30 grados.
-            </div>
-          </mi-accordion-item>
-          <mi-accordion-item>
-            <span slot="heading">Temporizador</span>
-            <div class="panel">
-              El campo numérico define en cuántos minutos se apagan los dispositivos de forma automática.
-            </div>
-          </mi-accordion-item>
-          <mi-accordion-item>
-            <span slot="heading">Luces</span>
-            <div class="panel">
-              El interruptor enciende o apaga las luces de la sala.
-            </div>
-          </mi-accordion-item>
-        </mi-accordion>
-      </section>
+        .wrapper {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
 
-      <section class="section" id="status">
-        <h2>Resumen</h2>
-        <p id="status-text"></p>
-      </section>
-    </main>
+        .scroll-container {
+          flex: 1;
+          display: flex;
+          gap: var(--scroll-gap);
+          padding: var(--scroll-padding);
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          scroll-snap-type: x proximity;
+          scrollbar-width: thin;
+          scrollbar-color: var(--bg-elevated, #243044) transparent;
+        }
+
+        ::slotted(my-card) {
+          flex: 0 0 auto;
+          scroll-snap-align: start;
+        }
+
+        .control {
+          width: var(--button-size);
+          height: var(--button-size);
+          flex-shrink: 0;
+        }
+
+        ::slotted(button) {
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+        }
+      </style>
+
+      <div class="wrapper">
+        <div class="control">
+          <slot name="left-button">
+            <button type="button">&#8592;</button>
+          </slot>
+        </div>
+
+        <div class="scroll-container">
+          <slot></slot>
+        </div>
+
+        <div class="control">
+          <slot name="right-button">
+            <button type="button">&#8594;</button>
+          </slot>
+        </div>
+      </div>
+    </template>
 
     <template id="slider-template">
       <style>
@@ -99,14 +189,52 @@
         }
 
         input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
           width: 100%;
+          height: 6px;
+          border-radius: 999px;
+          background: var(--bg-elevated, #243044);
           cursor: pointer;
+          outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #fff;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+          cursor: pointer;
+          transition: transform 0.15s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+          transform: scale(1.1);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border: none;
+          border-radius: 50%;
+          background: #fff;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+          cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-track {
+          height: 6px;
+          border-radius: 999px;
+          background: var(--bg-elevated, #243044);
         }
 
         .labels {
           position: relative;
           height: 1.25rem;
-          margin-top: 0.25rem;
+          margin-top: 0.5rem;
         }
       </style>
       <div class="slider">

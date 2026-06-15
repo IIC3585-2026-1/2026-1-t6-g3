@@ -1,42 +1,36 @@
-
 class MyHorizontalScroll extends HTMLElement {
-    constructor() {
-        super();
-    }
-
     connectedCallback() {
-        if (this.shadowRoot) {
-            return;
-        }
-
-        const shadow = this.attachShadow({ mode: "open" });
-        shadow.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    width: 100%;
-                }
-
-                .scroll-container {
-                    display: flex;
-                    gap: 1rem;
-                    overflow-x: auto;
-                    padding: 1rem;
-                    scroll-snap-type: x mandatory;
-                }
-
-                ::slotted(*) {
-                    flex: 0 0 auto;
-                    scroll-snap-align: start;
-                }
-            </style>
-
-            <div class="scroll-container">
-                <slot></slot>
-            </div>
-        `;
-
+      if (this.shadowRoot) return;
+  
+      const shadow = this.attachShadow({ mode: "open" });
+  
+      const template = document.getElementById("horizontal-scroll-template");
+      shadow.appendChild(template.content.cloneNode(true));
+  
+      const scrollContainer = shadow.querySelector(".scroll-container");
+  
+      const leftSlot = shadow.querySelector('slot[name="left-button"]');
+      const rightSlot = shadow.querySelector('slot[name="right-button"]');
+  
+      const getButton = (slot) => {
+        const assigned = slot.assignedElements();
+        return assigned[0] ?? slot.querySelector("button");
+      };
+  
+      getButton(leftSlot).addEventListener("click", () => {
+        scrollContainer.scrollBy({
+          left: -250,
+          behavior: "smooth"
+        });
+      });
+  
+      getButton(rightSlot).addEventListener("click", () => {
+        scrollContainer.scrollBy({
+          left: 250,
+          behavior: "smooth"
+        });
+      });
     }
-}
-
-customElements.define("my-horizontal-scroll", MyHorizontalScroll);
+  }
+  
+  customElements.define("my-horizontal-scroll", MyHorizontalScroll);

@@ -1,85 +1,83 @@
 class NumericField extends HTMLElement {
-    constructor() {
-        super();
+  constructor() {
+    super();
+  }
+
+  get value() {
+    return this.getAttribute("value");
+  }
+
+  set value(val) {
+    if (val !== null && val !== undefined && val !== "") {
+      this.setAttribute("value", val);
+    } else {
+      this.removeAttribute("value");
+    }
+    if (this.input) {
+      this.input.value = val ?? "";
+    }
+  }
+
+  connectedCallback() {
+    if (this.shadowRoot) {
+      return;
     }
 
-    get value() {
-        return this.getAttribute('value');
+    const shadow = this.attachShadow({ mode: "open" });
+
+    const wrapper = document.createElement("span");
+    wrapper.setAttribute("class", "wrapper");
+
+    this.input = document.createElement("input");
+    this.input.setAttribute("type", "number");
+    this.input.id = this.getAttribute("id") || "";
+
+    if (this.hasAttribute("value")) {
+      this.input.value = this.getAttribute("value");
     }
 
-    set value(val) {
-        if(val !== null && val !== undefined && val !== "") {
-            this.setAttribute('value', val);
-        }
-        else {
-            this.removeAttribute('value');
-        }
-        if (this.input) {
-            this.input.value = val ?? "";
-        }
-    }
+    wrapper.appendChild(this.input);
 
-    connectedCallback() {
+    const style = document.createElement("style");
+    style.textContent = `
+      .wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
 
-        if (this.shadowRoot) {
-            return;
-        }
+      input {
+        width: 5rem;
+        padding: 0.45rem 0.65rem;
+        font: inherit;
+        font-variant-numeric: tabular-nums;
+        color: var(--text-primary, #e8edf4);
+        background: var(--bg-elevated, #243044);
+        border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
 
-        const shadow = this.attachShadow({mode: "open"});
+      input:focus {
+        border-color: var(--accent, #3b9eff);
+      }
+    `;
 
-        const wrapper = document.createElement("span");
-        wrapper.setAttribute("class", "wrapper");
+    shadow.appendChild(style);
+    shadow.appendChild(wrapper);
 
-        this.input = document.createElement("input");
-        this.input.setAttribute("type", "number");
+    this.input.addEventListener("input", (e) => {
+      this.handleInput(e);
+    });
+  }
 
-        if (this.hasAttribute("value")) {
-            this.input.value = this.getAttribute("value");
-        }
-
-        wrapper.appendChild(this.input);
-        shadow.appendChild(wrapper);      
-        
-        this.input.addEventListener("input", e => { this.handleInput(e); });
-
-        const style = document.createElement("style");
-        style.textContent = `
-        .wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        input {
-            width: 5rem;
-            padding: 0.25rem 0.5rem;
-            font: inherit;
-            border: 1px solid #333;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 0.25rem 0.5rem;
-            cursor: pointer;
-            border: 1px solid #333;
-            border-radius: 4px;
-            background-color: #fff;
-        }
-
-        button:hover {
-            background-color: #eee;
-        }
-        `;
-
-        shadow.appendChild(style);
-        shadow.appendChild(wrapper);
-    }
-
-    handleInput(e) {
-        this.value = e.target.value;
-    }
-
-    
+  handleInput(e) {
+    this.value = e.target.value;
+    this.dispatchEvent(
+      new CustomEvent("input", { bubbles: true, detail: { value: e.target.value } })
+    );
+  }
 }
 
 customElements.define("numeric-field", NumericField);

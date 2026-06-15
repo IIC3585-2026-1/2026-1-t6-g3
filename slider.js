@@ -13,6 +13,7 @@ class SliderLabel extends HTMLElement {
                 transform: translateX(-50%);
                 white-space: nowrap;
                 font-size: 0.75rem;
+                color: var(--text-muted, #8b9cb3);
             }
         `;
 
