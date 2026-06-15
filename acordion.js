@@ -16,10 +16,14 @@ class MiAccordion extends HTMLElement {
                 display: block;
                 width: 100%;
                 margin: 1rem auto;
-                border: 1px solid #d0d0d0;
-                border-radius: 4px;
-                overflow: hidden;
-                background-color: #fff;
+            }
+
+            ::slotted(mi-accordion-item) {
+                margin-bottom: 0.5rem;
+            }
+
+            ::slotted(mi-accordion-item:last-child) {
+                margin-bottom: 0;
             }
         `;
 
@@ -75,13 +79,12 @@ class MiAccordionItem extends HTMLElement {
         style.textContent = `
             :host {
                 display: block;
-                border-bottom: 1px solid #d0d0d0;
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+                overflow: hidden;
+                background-color: #fff;
             }
-
-            :host(:last-child) {
-                border-bottom: 0;
-            }
-
+g
             button {
                 width: 100%;
                 display: flex;
