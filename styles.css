@@ -14,9 +14,47 @@ body {
 }
 
 .page {
-  max-width: 640px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 480px) {
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#status {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+#status-text {
+  margin: 0;
 }
 
 h1 {
@@ -35,12 +73,6 @@ button {
   border: 1px solid #333;
   border-radius: 4px;
   background-color: #fff;
-}
-
-.custom {
-  --card-width: 150px;
-  --card-height: 100px;
-  padding: 22px;
 }
 
 .scroll-card {
