@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Preferencias — Demo web components</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="presentation.css" />
+    <link rel="stylesheet" href="configuracion.css" />
   </head>
-  <body>
+  <body class="theme-settings">
     <div class="app">
       <aside class="sidebar">
         <div class="sidebar-brand">
@@ -32,30 +32,52 @@
           </mi-breadcrumb>
 
           <h1>Panel de preferencias</h1>
-          <p>Interruptores, campos numéricos y deslizadores organizados con acordeón.</p>
+          <p>Panel de configuración minimalista con acordeón, switches y campos numéricos.</p>
         </header>
 
-        <div class="dashboard">
-          <div class="dashboard-top">
-            <section class="section">
-              <p class="section-label">Pantalla</p>
-              <h2>Brillo</h2>
-              <p class="section-desc">Ajusta el nivel de brillo de la interfaz.</p>
-              <div class="metric-display" id="brightness-display">70<span>%</span></div>
-              <my-slider id="brightness-slider" min="10" max="100" value="70" step="5">
-                <slider-label position="10">10%</slider-label>
-                <slider-label position="40">40%</slider-label>
-                <slider-label position="70">70%</slider-label>
-                <slider-label position="100">100%</slider-label>
-              </my-slider>
-            </section>
+        <div class="settings-layout">
+          <section class="section preview-section">
+            <p class="section-label">Vista previa</p>
+            <h2>Interfaz configurada</h2>
+            <p class="section-desc">Los controles actualizan esta tarjeta sin cambiar la lógica de los componentes.</p>
+            <my-card id="preview-card" class="preview-card">
+              <div class="preview-screen" id="preview-screen">
+                <div class="preview-window">
+                  <div class="preview-toolbar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <strong id="preview-title">Modo oscuro activo</strong>
+                  <p id="preview-copy">Email activado, push desactivado y sesión de 30 minutos.</p>
+                  <div class="preview-toggles">
+                    <span id="preview-email">Email</span>
+                    <span id="preview-push">Push</span>
+                    <span id="preview-analytics">Analíticas</span>
+                  </div>
+                </div>
+              </div>
+            </my-card>
+          </section>
 
-            <section class="section" id="status">
-              <p class="section-label">Estado</p>
-              <h2>Resumen en vivo</h2>
-              <p class="live-summary" id="summary-text"></p>
-            </section>
-          </div>
+          <section class="section brightness-section">
+            <p class="section-label">Pantalla</p>
+            <h2>Brillo</h2>
+            <p class="section-desc">Ajusta el nivel de brillo de la interfaz.</p>
+            <div class="metric-display" id="brightness-display">70<span>%</span></div>
+            <my-slider id="brightness-slider" min="10" max="100" value="70" step="5" aria-label="Nivel de brillo">
+              <slider-label position="10">10%</slider-label>
+              <slider-label position="40">40%</slider-label>
+              <slider-label position="70">70%</slider-label>
+              <slider-label position="100">100%</slider-label>
+            </my-slider>
+          </section>
+
+          <section class="section settings-summary" id="status">
+            <p class="section-label">Estado</p>
+            <h2>Resumen en vivo</h2>
+            <p class="live-summary" id="summary-text" aria-live="polite"></p>
+          </section>
 
           <section class="section">
             <p class="section-label">Configuración</p>
@@ -128,83 +150,22 @@
               </mi-accordion-item>
             </mi-accordion>
           </section>
+
+          <section class="section component-note">
+            <p class="section-label">Reutilización</p>
+            <h2>Componentes usados</h2>
+            <div class="component-tags">
+              <span>&lt;my-slider&gt;</span>
+              <span>&lt;my-card&gt;</span>
+              <span>&lt;my-switch&gt;</span>
+              <span>&lt;mi-accordion&gt;</span>
+              <span>&lt;mi-breadcrumb&gt;</span>
+              <span>&lt;numeric-field&gt;</span>
+            </div>
+          </section>
         </div>
       </main>
     </div>
-
-    <template id="horizontal-scroll-template">
-      <style>
-        :host {
-          display: block;
-          width: 100%;
-          max-width: 100%;
-          overflow: hidden;
-          --scroll-gap: 1rem;
-          --scroll-padding: 1rem;
-          --button-size: 40px;
-        }
-
-        .wrapper {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          width: 100%;
-          max-width: 100%;
-          min-width: 0;
-        }
-
-        .scroll-container {
-          flex: 1;
-          min-width: 0;
-          display: flex;
-          align-items: flex-start;
-          gap: var(--scroll-gap);
-          padding: var(--scroll-padding);
-          overflow-x: auto;
-          overflow-y: hidden;
-          scroll-behavior: smooth;
-          scroll-snap-type: x proximity;
-          overscroll-behavior-x: contain;
-          scrollbar-width: thin;
-          scrollbar-color: var(--bg-elevated, #243044) transparent;
-        }
-
-        ::slotted(my-card) {
-          flex: 0 0 auto;
-          scroll-snap-align: start;
-        }
-
-        .control {
-          width: var(--button-size);
-          height: var(--button-size);
-          flex-shrink: 0;
-        }
-
-        ::slotted(button) {
-          width: 100%;
-          height: 100%;
-          cursor: pointer;
-        }
-      </style>
-
-      <div class="wrapper">
-        <div class="control">
-          <slot name="left-button">
-            <button type="button">&#8592;</button>
-          </slot>
-        </div>
-
-        <div class="scroll-container">
-          <slot></slot>
-        </div>
-
-        <div class="control">
-          <slot name="right-button">
-            <button type="button">&#8594;</button>
-          </slot>
-        </div>
-      </div>
-    </template>
 
     <template id="slider-template">
       <style>
@@ -222,7 +183,7 @@
           width: 100%;
           height: 6px;
           border-radius: 999px;
-          background: var(--bg-elevated, #243044);
+          background: var(--slider-track-bg, var(--surface-soft, var(--bg-elevated, #243044)));
           cursor: pointer;
           outline: none;
         }
@@ -233,7 +194,8 @@
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #fff;
+          background: var(--slider-thumb-bg, #ffffff);
+          border: var(--slider-thumb-border, 2px solid var(--accent, #38bdf8));
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
           cursor: pointer;
           transition: transform 0.15s;
@@ -246,9 +208,9 @@
         input[type="range"]::-moz-range-thumb {
           width: 20px;
           height: 20px;
-          border: none;
+          border: var(--slider-thumb-border, 2px solid var(--accent, #38bdf8));
           border-radius: 50%;
-          background: #fff;
+          background: var(--slider-thumb-bg, #ffffff);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
           cursor: pointer;
         }
@@ -256,7 +218,7 @@
         input[type="range"]::-moz-range-track {
           height: 6px;
           border-radius: 999px;
-          background: var(--bg-elevated, #243044);
+          background: var(--slider-track-bg, var(--surface-soft, var(--bg-elevated, #243044)));
         }
 
         .labels {
@@ -277,7 +239,6 @@
     <script src="numericField.js"></script>
     <script src="slider.js"></script>
     <script src="switch.js"></script>
-    <script src="horizontal_scroll.js"></script>
     <script src="card.js"></script>
     <script src="breadcrumb.js"></script>
     <script src="configuracion.js"></script>

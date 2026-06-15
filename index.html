@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="presentation.css" />
   </head>
-  <body>
+  <body class="theme-home">
     <div class="app">
       <aside class="sidebar">
         <div class="sidebar-brand">
@@ -27,22 +27,22 @@
         <header class="page-header">
           <span class="demo-badge">Demo 1 — Hogar</span>
           <mi-breadcrumb id="breadcrumb">
-            <mi-breadcrumb-item href="#" data-room="sala">Inicio</mi-breadcrumb-item>
+            <mi-breadcrumb-item href="#" data-room="sala">Casa</mi-breadcrumb-item>
             <mi-breadcrumb-item id="breadcrumb-room">Sala</mi-breadcrumb-item>
           </mi-breadcrumb>
 
           <h1 id="page-title">Panel de control — Sala</h1>
-          <p>Demostración de los web components del equipo aplicados a un panel de hogar inteligente.</p>
+          <p>Dashboard IoT con los mismos web components reutilizados en contexto de hogar inteligente.</p>
         </header>
 
-        <div class="dashboard">
-          <div class="dashboard-top">
+        <div class="home-grid">
+          <div class="home-grid-top">
             <section class="section">
               <p class="section-label">Clima</p>
               <h2>Termostato</h2>
               <p class="section-desc">Ajusta la temperatura objetivo de la habitación.</p>
               <div class="temp-display" id="temp-display" aria-live="polite">22<span>°C</span></div>
-              <my-slider id="thermostat" min="15" max="30" value="22" step="1">
+              <my-slider id="thermostat" min="15" max="30" value="22" step="1" aria-label="Temperatura objetivo">
                 <slider-label position="15">15&#8451;</slider-label>
                 <slider-label position="20">20&#8451;</slider-label>
                 <slider-label position="25">25&#8451;</slider-label>
@@ -71,7 +71,7 @@
           </div>
 
           <section class="section">
-            <p class="section-label">Navegación</p>
+            <p class="section-label">Dispositivos</p>
             <h2>Otras habitaciones</h2>
             <p class="section-desc">Selecciona una habitación para cambiar el panel de control.</p>
             <my-horizontal-scroll class="products" id="room-scroll">
@@ -112,12 +112,26 @@
               </mi-accordion>
             </section>
 
-            <section class="section" id="status">
+            <section class="section energy-summary" id="status">
               <p class="section-label">Estado</p>
-              <h2>Resumen</h2>
-              <p id="status-text"></p>
+              <h2>Resumen del hogar</h2>
+              <p class="live-summary" id="status-text" aria-live="polite"></p>
             </section>
           </div>
+
+          <section class="section component-note">
+            <p class="section-label">Reutilización</p>
+            <h2>Componentes usados</h2>
+            <div class="component-tags">
+              <span>&lt;my-card&gt;</span>
+              <span>&lt;my-slider&gt;</span>
+              <span>&lt;my-switch&gt;</span>
+              <span>&lt;my-horizontal-scroll&gt;</span>
+              <span>&lt;mi-accordion&gt;</span>
+              <span>&lt;mi-breadcrumb&gt;</span>
+              <span>&lt;numeric-field&gt;</span>
+            </div>
+          </section>
         </div>
       </main>
     </div>
@@ -156,7 +170,7 @@
           scroll-snap-type: x proximity;
           overscroll-behavior-x: contain;
           scrollbar-width: thin;
-          scrollbar-color: var(--bg-elevated, #243044) transparent;
+          scrollbar-color: var(--surface-soft, var(--bg-elevated, #243044)) transparent;
         }
 
         ::slotted(my-card) {
@@ -212,7 +226,7 @@
           width: 100%;
           height: 6px;
           border-radius: 999px;
-          background: var(--bg-elevated, #243044);
+          background: var(--slider-track-bg, var(--surface-soft, var(--bg-elevated, #243044)));
           cursor: pointer;
           outline: none;
         }
@@ -223,7 +237,8 @@
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #fff;
+          background: var(--slider-thumb-bg, #ffffff);
+          border: var(--slider-thumb-border, 2px solid var(--accent, #38bdf8));
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
           cursor: pointer;
           transition: transform 0.15s;
@@ -236,9 +251,9 @@
         input[type="range"]::-moz-range-thumb {
           width: 20px;
           height: 20px;
-          border: none;
+          border: var(--slider-thumb-border, 2px solid var(--accent, #38bdf8));
           border-radius: 50%;
-          background: #fff;
+          background: var(--slider-thumb-bg, #ffffff);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
           cursor: pointer;
         }
@@ -246,7 +261,7 @@
         input[type="range"]::-moz-range-track {
           height: 6px;
           border-radius: 999px;
-          background: var(--bg-elevated, #243044);
+          background: var(--slider-track-bg, var(--surface-soft, var(--bg-elevated, #243044)));
         }
 
         .labels {

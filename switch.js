@@ -35,7 +35,7 @@ class MiSwitch extends HTMLElement {
         :host {
           display: inline-block;
           font-family: inherit;
-          color: var(--text-primary, #e8edf4);
+          color: var(--text-main, var(--text-primary, #e8edf4));
         }
 
         .container {
@@ -66,7 +66,7 @@ class MiSwitch extends HTMLElement {
         .track {
           width: 48px;
           height: 26px;
-          background: var(--switch-track-off, #243044);
+          background: var(--switch-off-bg, var(--surface-soft, #243044));
           border-radius: 999px;
           display: inline-flex;
           align-items: center;
@@ -85,7 +85,7 @@ class MiSwitch extends HTMLElement {
         }
 
         :host([checked]) .track {
-          background: var(--switch-track-on, #34d399);
+          background: var(--switch-on-bg, var(--accent, #38bdf8));
         }
 
         :host([checked]) .thumb {

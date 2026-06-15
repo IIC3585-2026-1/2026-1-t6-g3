@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda online — Demo web components</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="presentation.css" />
+    <link rel="stylesheet" href="tienda.css" />
   </head>
-  <body>
+  <body class="theme-store">
     <div class="app">
       <aside class="sidebar">
         <div class="sidebar-brand">
@@ -32,28 +32,33 @@
           </mi-breadcrumb>
 
           <h1 id="page-title">Catálogo — Electrónica</h1>
-          <p>Explora productos con tarjetas, filtros interactivos y resumen dinámico.</p>
-          <div class="category-nav" id="category-nav" aria-label="Categorías"></div>
+          <p>E-commerce moderno construido con los mismos componentes base del equipo.</p>
+          <nav class="category-nav" id="category-nav" aria-label="Categorías"></nav>
+          <div class="store-kpis" aria-label="Indicadores del catálogo">
+            <span id="visible-count">8 productos visibles</span>
+            <span id="stock-count">6 disponibles</span>
+            <span id="cart-mode">Compra estándar</span>
+          </div>
         </header>
 
-        <div class="dashboard">
+        <div class="store-layout">
           <section class="section">
             <p class="section-label">Productos</p>
             <h2>Catálogo destacado</h2>
             <p class="section-desc">Desplázate horizontalmente y selecciona un producto.</p>
-            <my-horizontal-scroll class="products" id="product-scroll">
+            <my-horizontal-scroll class="product-carousel" id="product-scroll">
               <button slot="left-button" class="scroll-btn" type="button" aria-label="Desplazar izquierda">&#8592;</button>
               <button slot="right-button" class="scroll-btn" type="button" aria-label="Desplazar derecha">&#8594;</button>
             </my-horizontal-scroll>
           </section>
 
-          <div class="dashboard-top">
+          <div class="store-layout-main">
             <section class="section">
               <p class="section-label">Filtros</p>
               <h2>Precio máximo</h2>
               <p class="section-desc">Ajusta el rango para filtrar productos visibles.</p>
               <div class="metric-display" id="price-display">500<span>€ máx.</span></div>
-              <my-slider id="price-slider" min="50" max="500" value="500" step="10">
+              <my-slider id="price-slider" min="50" max="500" value="500" step="10" aria-label="Precio máximo">
                 <slider-label position="50">50€</slider-label>
                 <slider-label position="200">200€</slider-label>
                 <slider-label position="350">350€</slider-label>
@@ -101,12 +106,28 @@
               </mi-accordion>
             </section>
 
-            <section class="section" id="status">
+            <section class="section cart-summary" id="status">
               <p class="section-label">Resumen</p>
               <h2>Tu selección</h2>
-              <p class="live-summary" id="summary-text"></p>
+              <p class="live-summary" id="summary-text" aria-live="polite"></p>
+              <div class="checkout-strip" id="checkout-strip" aria-live="polite"></div>
+              <button type="button" class="cart-add-btn">Agregar al carrito</button>
             </section>
           </div>
+
+          <section class="section component-note">
+            <p class="section-label">Reutilización</p>
+            <h2>Componentes usados</h2>
+            <div class="component-tags">
+              <span>&lt;my-card&gt;</span>
+              <span>&lt;my-slider&gt;</span>
+              <span>&lt;my-switch&gt;</span>
+              <span>&lt;my-horizontal-scroll&gt;</span>
+              <span>&lt;mi-accordion&gt;</span>
+              <span>&lt;mi-breadcrumb&gt;</span>
+              <span>&lt;numeric-field&gt;</span>
+            </div>
+          </section>
         </div>
       </main>
     </div>
@@ -145,7 +166,7 @@
           scroll-snap-type: x proximity;
           overscroll-behavior-x: contain;
           scrollbar-width: thin;
-          scrollbar-color: var(--bg-elevated, #243044) transparent;
+          scrollbar-color: var(--surface-soft, var(--bg-elevated, #243044)) transparent;
         }
 
         ::slotted(my-card) {
@@ -201,7 +222,7 @@
           width: 100%;
           height: 6px;
           border-radius: 999px;
-          background: var(--bg-elevated, #243044);
+          background: var(--slider-track-bg, var(--surface-soft, var(--bg-elevated, #243044)));
           cursor: pointer;
           outline: none;
         }
@@ -212,7 +233,8 @@
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #fff;
+          background: var(--slider-thumb-bg, #ffffff);
+          border: var(--slider-thumb-border, 2px solid var(--accent, #38bdf8));
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
           cursor: pointer;
           transition: transform 0.15s;
@@ -225,9 +247,9 @@
         input[type="range"]::-moz-range-thumb {
           width: 20px;
           height: 20px;
-          border: none;
+          border: var(--slider-thumb-border, 2px solid var(--accent, #38bdf8));
           border-radius: 50%;
-          background: #fff;
+          background: var(--slider-thumb-bg, #ffffff);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
           cursor: pointer;
         }
@@ -235,7 +257,7 @@
         input[type="range"]::-moz-range-track {
           height: 6px;
           border-radius: 999px;
-          background: var(--bg-elevated, #243044);
+          background: var(--slider-track-bg, var(--surface-soft, var(--bg-elevated, #243044)));
         }
 
         .labels {

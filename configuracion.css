@@ -1,0 +1,276 @@
+.theme-settings {
+  --page-bg: #f4f7fb;
+  --surface: #ffffff;
+  --surface-soft: #e9eef6;
+  --text-main: #172033;
+  --text-muted: #687386;
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.12);
+  --card-radius: 16px;
+  --border: rgba(23, 32, 51, 0.1);
+  --shadow: 0 12px 32px rgba(23, 32, 51, 0.08);
+  --slider-thumb-bg: #ffffff;
+  --slider-thumb-border: 3px solid #2563eb;
+  --switch-on-bg: #2563eb;
+  background: linear-gradient(180deg, #f8fbff, #eef3fa);
+}
+
+.theme-settings.settings-light-mode {
+  --accent: #0891b2;
+  --accent-soft: rgba(8, 145, 178, 0.12);
+  --switch-on-bg: #0891b2;
+}
+
+.theme-settings .app {
+  grid-template-columns: 280px minmax(0, 1fr);
+}
+
+.theme-settings .sidebar {
+  background: rgba(255, 255, 255, 0.78);
+  border-right: 1px solid rgba(23, 32, 51, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.demo-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.demo-nav a {
+  display: block;
+  padding: 0.62rem 0.75rem;
+  border-radius: 12px;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.demo-nav a:hover,
+.demo-nav a[aria-current="page"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.theme-settings .page {
+  max-width: 1040px;
+}
+
+.theme-settings .page-header {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.theme-settings .page-header h1 {
+  font-size: 2rem;
+  color: #172033;
+}
+
+.demo-badge {
+  width: fit-content;
+  padding: 0.22rem 0.58rem;
+  border-radius: 8px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.settings-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(330px, 0.9fr);
+  gap: 1rem;
+  max-width: none;
+  align-items: start;
+}
+
+.preview-section,
+.settings-layout > .section:nth-child(4) {
+  grid-row: span 2;
+}
+
+.theme-settings .section {
+  border-radius: 18px;
+  border-color: var(--border);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9), var(--shadow);
+}
+
+.theme-settings .section h2 {
+  color: #172033;
+}
+
+.section-label {
+  color: var(--accent);
+}
+
+.section-desc,
+.live-summary,
+.panel {
+  color: var(--text-muted);
+}
+
+.metric-display {
+  color: var(--accent);
+  font-size: 2.35rem;
+}
+
+.preview-card {
+  --card-width: 100%;
+  --card-height: auto;
+  --card-padding: 0;
+  --card-bg: transparent;
+  --card-border: 0;
+  --card-radius: 18px;
+}
+
+.preview-screen {
+  min-height: 300px;
+  padding: 1.2rem;
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(37, 99, 235, 0.25), transparent 45%),
+    #121826;
+  transition: filter 0.2s ease, background 0.2s ease;
+}
+
+.settings-light-mode .preview-screen {
+  background:
+    linear-gradient(135deg, rgba(8, 145, 178, 0.22), transparent 45%),
+    #ecfeff;
+}
+
+.preview-window {
+  min-height: 250px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  color: #e5edff;
+  background: rgba(15, 23, 42, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.settings-light-mode .preview-window {
+  color: #164e63;
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(8, 145, 178, 0.18);
+}
+
+.preview-toolbar {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 2.2rem;
+}
+
+.preview-toolbar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #60a5fa;
+}
+
+.preview-window strong {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 1.25rem;
+}
+
+.preview-window p {
+  margin: 0;
+  color: inherit;
+  opacity: 0.78;
+}
+
+.preview-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 2rem;
+}
+
+.preview-toggles span {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.15);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.preview-toggles span.is-active {
+  color: #ffffff;
+  background: var(--accent);
+}
+
+.setting-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.setting-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.setting-row-info strong {
+  display: block;
+  font-size: 0.92rem;
+}
+
+.setting-row-info span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.settings-summary {
+  border-left: 5px solid var(--accent);
+}
+
+.component-note {
+  border-style: dashed;
+}
+
+.component-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.component-tags span {
+  padding: 0.32rem 0.6rem;
+  border-radius: 8px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 900px) {
+  .theme-settings .app,
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-section,
+  .settings-layout > .section:nth-child(4) {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .setting-row {
+    grid-template-columns: 1fr;
+  }
+}

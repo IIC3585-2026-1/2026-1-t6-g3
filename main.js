@@ -1,3 +1,6 @@
+// Esta página no crea componentes nuevos: reutiliza my-card, my-slider,
+// my-switch, my-horizontal-scroll y mi-accordion con datos de hogar inteligente.
+
 const ROOMS = {
   sala: {
     name: "Sala",
@@ -88,8 +91,20 @@ function loadRoom(roomId) {
   }
 }
 
+function getDeviceStateClass(state) {
+  if (state.temp >= 28 || state.temp <= 15) {
+    return "is-alert";
+  }
+  return state.lights ? "is-on" : "is-off";
+}
+
+function applyDeviceState(card, state) {
+  card.classList.remove("is-on", "is-off", "is-alert");
+  card.classList.add(getDeviceStateClass(state));
+}
+
 function setActiveRoom(roomId) {
-  document.querySelectorAll(".nav-card, .scroll-card").forEach((el) => {
+  document.querySelectorAll(".nav-card, .scroll-card, .device-card").forEach((el) => {
     if (el.dataset.room === roomId) {
       el.setAttribute("active", "");
     } else {
@@ -146,20 +161,21 @@ function createNavCard(roomId, room) {
 
 function createScrollCard(roomId, room) {
   const card = document.createElement("my-card");
-  card.className = "scroll-card";
+  card.className = "device-card scroll-card";
   card.dataset.room = roomId;
   if (roomId === currentRoom) {
     card.setAttribute("active", "");
   }
 
   const state = roomState[roomId];
+  applyDeviceState(card, state);
   const lightsLabel = state.lights ? "Luces encendidas" : "Luces apagadas";
 
   card.innerHTML = `
-    <div class="room-card-inner">
-      <span class="room-card-icon">${room.icon}</span>
-      <span class="room-card-name">${room.name}</span>
-      <span class="room-card-status">${state.temp}°C · ${lightsLabel}</span>
+    <div class="device-card-inner room-card-inner">
+      <span class="device-card-icon room-card-icon">${room.icon}</span>
+      <span class="device-card-name room-card-name">${room.name}</span>
+      <span class="device-card-status room-card-status">${state.temp}°C · ${lightsLabel}</span>
     </div>
   `;
 
@@ -175,13 +191,14 @@ function buildNavigation() {
 }
 
 function refreshScrollCards() {
-  roomScroll.querySelectorAll(".scroll-card").forEach((card) => {
+  roomScroll.querySelectorAll(".scroll-card, .device-card").forEach((card) => {
     const roomId = card.dataset.room;
     const room = ROOMS[roomId];
     const state = roomState[roomId];
     const lightsLabel = state.lights ? "Luces encendidas" : "Luces apagadas";
 
-    card.querySelector(".room-card-status").textContent =
+    applyDeviceState(card, state);
+    card.querySelector(".room-card-status, .device-card-status").textContent =
       `${state.temp}°C · ${lightsLabel}`;
   });
 }
