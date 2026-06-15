@@ -83,8 +83,9 @@ class MiAccordionItem extends HTMLElement {
                 border-radius: 4px;
                 overflow: hidden;
                 background-color: #fff;
+                box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
             }
-g
+
             button {
                 width: 100%;
                 display: flex;
@@ -110,6 +111,7 @@ g
                 font-size: 1.1rem;
                 line-height: 1;
                 transform: rotate(90deg);
+                transition: transform 0.2s ease;
             }
 
             :host([open]) button::after {
