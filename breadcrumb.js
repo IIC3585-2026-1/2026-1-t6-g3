@@ -21,6 +21,18 @@ class Breadcrumb extends HTMLElement {
 
         paragraph.textContent = paragraphContent.trim();
         shadow.appendChild(paragraph);
+
+        const style = document.createElement("style");
+        style.textContent = `
+        p {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+        `;
+
+        shadow.appendChild(style);
     }
 }
 
