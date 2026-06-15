@@ -30,6 +30,19 @@ class MyHorizontalScroll extends HTMLElement {
           behavior: "smooth"
         });
       });
+
+      scrollContainer.addEventListener(
+        "wheel",
+        (e) => {
+          if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) {
+            return;
+          }
+
+          e.preventDefault();
+          window.scrollBy({ top: e.deltaY, behavior: "auto" });
+        },
+        { passive: false }
+      );
     }
   }
   

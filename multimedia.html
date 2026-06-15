@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de control del hogar</title>
+    <title>Biblioteca multimedia — Demo web components</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="presentation.css" />
   </head>
@@ -15,107 +15,94 @@
           <span>Demos de presentación</span>
         </div>
         <nav class="demo-nav" aria-label="Demos">
-          <a href="index.html" aria-current="page">Hogar inteligente</a>
+          <a href="index.html">Hogar inteligente</a>
           <a href="tienda.html">Tienda online</a>
           <a href="configuracion.html">Preferencias</a>
-          <a href="multimedia.html">Biblioteca multimedia</a>
+          <a href="multimedia.html" aria-current="page">Biblioteca multimedia</a>
         </nav>
-        <nav class="room-nav" id="room-nav" aria-label="Habitaciones"></nav>
       </aside>
 
       <main class="page">
         <header class="page-header">
-          <span class="demo-badge">Demo 1 — Hogar</span>
+          <span class="demo-badge">Demo 4 — Streaming</span>
           <mi-breadcrumb id="breadcrumb">
-            <mi-breadcrumb-item href="#" data-room="sala">Inicio</mi-breadcrumb-item>
-            <mi-breadcrumb-item id="breadcrumb-room">Sala</mi-breadcrumb-item>
+            <mi-breadcrumb-item href="#" data-room="scifi">Biblioteca</mi-breadcrumb-item>
+            <mi-breadcrumb-item id="breadcrumb-genre">Ciencia ficción</mi-breadcrumb-item>
+            <mi-breadcrumb-item id="breadcrumb-show">Nébula Perdida</mi-breadcrumb-item>
           </mi-breadcrumb>
 
-          <h1 id="page-title">Panel de control — Sala</h1>
-          <p>Demostración de los web components del equipo aplicados a un panel de hogar inteligente.</p>
+          <h1 id="page-title">Biblioteca — Ciencia ficción</h1>
+          <p>Navega por géneros, selecciona títulos y configura la reproducción.</p>
+          <div class="category-nav" id="genre-nav" aria-label="Géneros"></div>
         </header>
 
         <div class="dashboard">
+          <section class="section">
+            <p class="section-label">Catálogo</p>
+            <h2>Títulos del género</h2>
+            <p class="section-desc">Explora series y películas con desplazamiento horizontal.</p>
+            <my-horizontal-scroll class="products" id="media-scroll">
+              <button slot="left-button" class="scroll-btn" type="button" aria-label="Desplazar izquierda">&#8592;</button>
+              <button slot="right-button" class="scroll-btn" type="button" aria-label="Desplazar derecha">&#8594;</button>
+            </my-horizontal-scroll>
+          </section>
+
           <div class="dashboard-top">
             <section class="section">
-              <p class="section-label">Clima</p>
-              <h2>Termostato</h2>
-              <p class="section-desc">Ajusta la temperatura objetivo de la habitación.</p>
-              <div class="temp-display" id="temp-display" aria-live="polite">22<span>°C</span></div>
-              <my-slider id="thermostat" min="15" max="30" value="22" step="1">
-                <slider-label position="15">15&#8451;</slider-label>
-                <slider-label position="20">20&#8451;</slider-label>
-                <slider-label position="25">25&#8451;</slider-label>
-                <slider-label position="30">30&#8451;</slider-label>
+              <p class="section-label">Reproducción</p>
+              <h2>Temporada</h2>
+              <p class="section-desc">Selecciona la temporada a reproducir.</p>
+              <div class="metric-display" id="season-display">T1</div>
+              <my-slider id="season-slider" min="1" max="3" value="1" step="1">
+                <slider-label position="1">T1</slider-label>
+                <slider-label position="2">T2</slider-label>
+                <slider-label position="3">T3</slider-label>
               </my-slider>
             </section>
 
             <section class="section">
-              <p class="section-label">Dispositivos</p>
-              <h2>Controles</h2>
-              <p class="section-desc">Configura el comportamiento de los dispositivos de la habitación.</p>
-              <div class="controls">
-                <div class="control">
-                  <label for="timer-field">Apagado automático (minutos)</label>
-                  <numeric-field id="timer-field" value="30"></numeric-field>
-                </div>
-                <div class="control">
-                  <my-switch id="lights-switch">
-                    <label>Luces:</label>
-                    <span slot="checked-message">Encendidas</span>
-                    <span slot="unchecked-message">Apagadas</span>
+              <p class="section-label">Accesibilidad</p>
+              <h2>Subtítulos</h2>
+              <p class="section-desc">Activa o desactiva los subtítulos.</p>
+              <div class="setting-list">
+                <div class="setting-row">
+                  <div class="setting-row-info">
+                    <strong>Mostrar subtítulos</strong>
+                    <span>Idioma: Español</span>
+                  </div>
+                  <my-switch id="subtitle-switch" checked>
+                    <span slot="checked-message">Sí</span>
+                    <span slot="unchecked-message">No</span>
                   </my-switch>
                 </div>
               </div>
             </section>
           </div>
 
-          <section class="section">
-            <p class="section-label">Navegación</p>
-            <h2>Otras habitaciones</h2>
-            <p class="section-desc">Selecciona una habitación para cambiar el panel de control.</p>
-            <my-horizontal-scroll class="products" id="room-scroll">
-              <button slot="left-button" class="scroll-btn" type="button" aria-label="Desplazar izquierda">&#8592;</button>
-              <button slot="right-button" class="scroll-btn" type="button" aria-label="Desplazar derecha">&#8594;</button>
-            </my-horizontal-scroll>
-          </section>
-
           <div class="dashboard-bottom">
             <section class="section">
-              <p class="section-label">Documentación</p>
-              <h2>Ayuda</h2>
+              <p class="section-label">Detalles</p>
+              <h2>Sinopsis</h2>
               <mi-accordion>
-                <mi-accordion-item>
-                  <span slot="heading">Termostato</span>
-                  <div class="panel">
-                    Usa el deslizador para fijar la temperatura objetivo entre 15 y 30 grados.
-                  </div>
+                <mi-accordion-item open>
+                  <span slot="heading">Trama</span>
+                  <div class="panel">Una tripulación explora los confines del universo en busca de un planeta habitable.</div>
                 </mi-accordion-item>
                 <mi-accordion-item>
-                  <span slot="heading">Temporizador</span>
-                  <div class="panel">
-                    El campo numérico define en cuántos minutos se apagan los dispositivos de forma automática.
-                  </div>
+                  <span slot="heading">Reparto</span>
+                  <div class="panel">Elena Voss, Marco Ruiz, Aisha Chen y guest stars de cada temporada.</div>
                 </mi-accordion-item>
                 <mi-accordion-item>
-                  <span slot="heading">Luces</span>
-                  <div class="panel">
-                    El interruptor enciende o apaga las luces de la habitación activa.
-                  </div>
-                </mi-accordion-item>
-                <mi-accordion-item>
-                  <span slot="heading">Navegación</span>
-                  <div class="panel">
-                    Usa la barra lateral o las tarjetas horizontales para cambiar de habitación. Cada una conserva su propia configuración.
-                  </div>
+                  <span slot="heading">Curiosidades</span>
+                  <div class="panel">Rodada con técnicas de cámara inmersiva y banda sonora original.</div>
                 </mi-accordion-item>
               </mi-accordion>
             </section>
 
             <section class="section" id="status">
               <p class="section-label">Estado</p>
-              <h2>Resumen</h2>
-              <p id="status-text"></p>
+              <h2>Reproducción actual</h2>
+              <p class="live-summary" id="summary-text"></p>
             </section>
           </div>
         </div>
@@ -270,6 +257,6 @@
     <script src="horizontal_scroll.js"></script>
     <script src="card.js"></script>
     <script src="breadcrumb.js"></script>
-    <script src="main.js"></script>
+    <script src="multimedia.js"></script>
   </body>
 </html>

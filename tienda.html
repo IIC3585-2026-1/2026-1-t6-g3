@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de control del hogar</title>
+    <title>Tienda online — Demo web components</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="presentation.css" />
   </head>
@@ -15,107 +15,96 @@
           <span>Demos de presentación</span>
         </div>
         <nav class="demo-nav" aria-label="Demos">
-          <a href="index.html" aria-current="page">Hogar inteligente</a>
-          <a href="tienda.html">Tienda online</a>
+          <a href="index.html">Hogar inteligente</a>
+          <a href="tienda.html" aria-current="page">Tienda online</a>
           <a href="configuracion.html">Preferencias</a>
           <a href="multimedia.html">Biblioteca multimedia</a>
         </nav>
-        <nav class="room-nav" id="room-nav" aria-label="Habitaciones"></nav>
       </aside>
 
       <main class="page">
         <header class="page-header">
-          <span class="demo-badge">Demo 1 — Hogar</span>
+          <span class="demo-badge">Demo 2 — Catálogo</span>
           <mi-breadcrumb id="breadcrumb">
-            <mi-breadcrumb-item href="#" data-room="sala">Inicio</mi-breadcrumb-item>
-            <mi-breadcrumb-item id="breadcrumb-room">Sala</mi-breadcrumb-item>
+            <mi-breadcrumb-item href="#" data-room="electronica">Tienda</mi-breadcrumb-item>
+            <mi-breadcrumb-item id="breadcrumb-category">Electrónica</mi-breadcrumb-item>
+            <mi-breadcrumb-item id="breadcrumb-product">Auriculares Pro</mi-breadcrumb-item>
           </mi-breadcrumb>
 
-          <h1 id="page-title">Panel de control — Sala</h1>
-          <p>Demostración de los web components del equipo aplicados a un panel de hogar inteligente.</p>
+          <h1 id="page-title">Catálogo — Electrónica</h1>
+          <p>Explora productos con tarjetas, filtros interactivos y resumen dinámico.</p>
+          <div class="category-nav" id="category-nav" aria-label="Categorías"></div>
         </header>
 
         <div class="dashboard">
+          <section class="section">
+            <p class="section-label">Productos</p>
+            <h2>Catálogo destacado</h2>
+            <p class="section-desc">Desplázate horizontalmente y selecciona un producto.</p>
+            <my-horizontal-scroll class="products" id="product-scroll">
+              <button slot="left-button" class="scroll-btn" type="button" aria-label="Desplazar izquierda">&#8592;</button>
+              <button slot="right-button" class="scroll-btn" type="button" aria-label="Desplazar derecha">&#8594;</button>
+            </my-horizontal-scroll>
+          </section>
+
           <div class="dashboard-top">
             <section class="section">
-              <p class="section-label">Clima</p>
-              <h2>Termostato</h2>
-              <p class="section-desc">Ajusta la temperatura objetivo de la habitación.</p>
-              <div class="temp-display" id="temp-display" aria-live="polite">22<span>°C</span></div>
-              <my-slider id="thermostat" min="15" max="30" value="22" step="1">
-                <slider-label position="15">15&#8451;</slider-label>
-                <slider-label position="20">20&#8451;</slider-label>
-                <slider-label position="25">25&#8451;</slider-label>
-                <slider-label position="30">30&#8451;</slider-label>
+              <p class="section-label">Filtros</p>
+              <h2>Precio máximo</h2>
+              <p class="section-desc">Ajusta el rango para filtrar productos visibles.</p>
+              <div class="metric-display" id="price-display">500<span>€ máx.</span></div>
+              <my-slider id="price-slider" min="50" max="500" value="500" step="10">
+                <slider-label position="50">50€</slider-label>
+                <slider-label position="200">200€</slider-label>
+                <slider-label position="350">350€</slider-label>
+                <slider-label position="500">500€</slider-label>
               </my-slider>
             </section>
 
             <section class="section">
-              <p class="section-label">Dispositivos</p>
-              <h2>Controles</h2>
-              <p class="section-desc">Configura el comportamiento de los dispositivos de la habitación.</p>
+              <p class="section-label">Compra</p>
+              <h2>Opciones</h2>
+              <p class="section-desc">Configura disponibilidad y cantidad del pedido.</p>
               <div class="controls">
                 <div class="control">
-                  <label for="timer-field">Apagado automático (minutos)</label>
-                  <numeric-field id="timer-field" value="30"></numeric-field>
+                  <label for="quantity-field">Cantidad</label>
+                  <numeric-field id="quantity-field" value="1"></numeric-field>
                 </div>
                 <div class="control">
-                  <my-switch id="lights-switch">
-                    <label>Luces:</label>
-                    <span slot="checked-message">Encendidas</span>
-                    <span slot="unchecked-message">Apagadas</span>
+                  <my-switch id="stock-switch">
+                    <label>Solo en stock:</label>
+                    <span slot="checked-message">Activado</span>
+                    <span slot="unchecked-message">Desactivado</span>
                   </my-switch>
                 </div>
               </div>
             </section>
           </div>
 
-          <section class="section">
-            <p class="section-label">Navegación</p>
-            <h2>Otras habitaciones</h2>
-            <p class="section-desc">Selecciona una habitación para cambiar el panel de control.</p>
-            <my-horizontal-scroll class="products" id="room-scroll">
-              <button slot="left-button" class="scroll-btn" type="button" aria-label="Desplazar izquierda">&#8592;</button>
-              <button slot="right-button" class="scroll-btn" type="button" aria-label="Desplazar derecha">&#8594;</button>
-            </my-horizontal-scroll>
-          </section>
-
           <div class="dashboard-bottom">
             <section class="section">
-              <p class="section-label">Documentación</p>
-              <h2>Ayuda</h2>
+              <p class="section-label">Ayuda</p>
+              <h2>Preguntas frecuentes</h2>
               <mi-accordion>
                 <mi-accordion-item>
-                  <span slot="heading">Termostato</span>
-                  <div class="panel">
-                    Usa el deslizador para fijar la temperatura objetivo entre 15 y 30 grados.
-                  </div>
+                  <span slot="heading">Envíos</span>
+                  <div class="panel">Los pedidos en stock se envían en 24–48 horas laborables.</div>
                 </mi-accordion-item>
                 <mi-accordion-item>
-                  <span slot="heading">Temporizador</span>
-                  <div class="panel">
-                    El campo numérico define en cuántos minutos se apagan los dispositivos de forma automática.
-                  </div>
+                  <span slot="heading">Devoluciones</span>
+                  <div class="panel">Tienes 30 días para devolver productos sin usar.</div>
                 </mi-accordion-item>
                 <mi-accordion-item>
-                  <span slot="heading">Luces</span>
-                  <div class="panel">
-                    El interruptor enciende o apaga las luces de la habitación activa.
-                  </div>
-                </mi-accordion-item>
-                <mi-accordion-item>
-                  <span slot="heading">Navegación</span>
-                  <div class="panel">
-                    Usa la barra lateral o las tarjetas horizontales para cambiar de habitación. Cada una conserva su propia configuración.
-                  </div>
+                  <span slot="heading">Garantía</span>
+                  <div class="panel">Todos los productos incluyen garantía de 2 años.</div>
                 </mi-accordion-item>
               </mi-accordion>
             </section>
 
             <section class="section" id="status">
-              <p class="section-label">Estado</p>
-              <h2>Resumen</h2>
-              <p id="status-text"></p>
+              <p class="section-label">Resumen</p>
+              <h2>Tu selección</h2>
+              <p class="live-summary" id="summary-text"></p>
             </section>
           </div>
         </div>
@@ -270,6 +259,6 @@
     <script src="horizontal_scroll.js"></script>
     <script src="card.js"></script>
     <script src="breadcrumb.js"></script>
-    <script src="main.js"></script>
+    <script src="tienda.js"></script>
   </body>
 </html>
