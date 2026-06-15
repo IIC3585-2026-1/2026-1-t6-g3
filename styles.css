@@ -37,6 +37,18 @@ button {
   background-color: #fff;
 }
 
+.custom {
+  --card-width: 150px;
+  --card-height: 100px;
+  padding: 22px;
+}
+
+.scroll-card {
+  --card-width: 200px;
+  --card-height: 300px;
+  padding: 18px;
+}
+
 button:hover {
   background-color: #eee;
 }

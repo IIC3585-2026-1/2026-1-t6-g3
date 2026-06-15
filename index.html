@@ -23,7 +23,27 @@
         <slider-label position="75">75&#8451;</slider-label>
         <slider-label position="100">100&#8451;</slider-label>
       </my-slider>
+    
+      <my-switch>
+        <span slot="checked-message">On</span>
+        <span slot="unchecked-message">Off</span>
+        <label>Captions:</label>
+      </my-switch>
+
+      <my-horizontal-scroll>
+        <my-card class="scroll-card">Card 1</my-card>
+        <my-card class="scroll-card">Card 2</my-card>
+        <my-card class="scroll-card">Card 3</my-card>
+        <my-card class="scroll-card">Card 4</my-card>
+        <my-card class="scroll-card">Card 5</my-card>
+      </my-horizontal-scroll>
+
+      <my-card class="custom"> Custom size using CSS </my-card>
     </main>
+
+    
+
+
 
     <template id="slider-template">
       <style>
@@ -85,6 +105,10 @@
     <script src="main.js"></script>
     <script src="numericField.js"></script>
     <script src="slider.js"></script>
+    <script src="switch.js"></script>
+    <script src="horizontal_scroll.js"></script>
+    <script src="card.js"></script>
     <script src="breadcrumb.js"></script>
+
   </body>
 </html>
