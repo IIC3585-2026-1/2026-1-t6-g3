@@ -74,12 +74,41 @@
       </div>
     </template>
 
-    <script src="main.js"></script>
+    <mi-breadcrumb>
+      <mi-breadcrumb-item href="#">Home</mi-breadcrumb-item>
+      <mi-breadcrumb-item href="#">Next Level Down</mi-breadcrumb-item>
+      <mi-breadcrumb-item>Current Location</mi-breadcrumb-item>
+    </mi-breadcrumb>
 
+    <mi-accordion style="max-width: 350px;">
+      <mi-accordion-item>
+        <span slot="heading">Item 1</span>
+        <div class="panel">
+          Panel one content
+        </div>
+      </mi-accordion-item>
+      <mi-accordion-item>
+        <span slot="heading">Item 2</span>
+        <div class="panel">
+          Panel 2 content
+        </div>
+      </mi-accordion-item>
+      <mi-accordion-item>
+        <span slot="heading">Item 3</span>
+        <div class="panel">
+          Panel 3 content
+        </div>
+      </mi-accordion-item>
+    </mi-accordion>
+
+    <script src="acordion.js"></script>
+    <script src="main.js"></script>
     <script src="numericField.js"></script>
     <script src="slider.js"></script>
     <script src="switch.js"></script>
     <script src="horizontal_scroll.js"></script>
     <script src="card.js"></script>
+    <script src="breadcrumb.js"></script>
+
   </body>
 </html>
